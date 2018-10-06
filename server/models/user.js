@@ -72,12 +72,24 @@ userSchema.methods.comparePassword = function(condidatePassword, cb) {
 
 userSchema.methods.generateToken = function(cb) {
   let user = this;
-  let token = jwt.sign(user._id.teHexString(), process.env.SECRET);
+  let token = jwt.sign(user._id.toHexString(), process.env.SECRET);
 
   user.token = token;
   user.save(function(err, user) {
     if (err) return cb(err);
     cb(null, user);
+  });
+};
+
+userSchema.statics.findByToken = function(token, cb) {
+  let user = this;
+
+  jwt.verify(token, process.env.SECRET, function(err, decode) {
+    user.findOne({ _id: decode, token: token }, function(err, user) {
+      if (err) return cb(err);
+
+      cb(null, user);
+    });
   });
 };
 
