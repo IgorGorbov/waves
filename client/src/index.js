@@ -16,7 +16,7 @@ const createWithMiddleware = applyMiddleware(promiseMiddleware, reduxThunk)(
 );
 
 const devTools =
-  window.__REDUX_DEVTOOLSEXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 const store = createWithMiddleware(Reducer, devTools);
 
 ReactDOM.render(
