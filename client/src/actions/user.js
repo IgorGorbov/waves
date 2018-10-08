@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from './types';
+import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from './types';
 import { USER_SERVER } from '../utils/misc';
 
 export const loginUser = dataToSubmit => {
@@ -26,12 +26,21 @@ export const registerUser = dataToSubmit => {
 };
 
 export const auth = dataToSubmit => {
-  const request = axios
-    .post(`${USER_SERVER}/auth`)
-    .then(response => response.data);
+  const request = axios(`${USER_SERVER}/auth`).then(response => response.data);
 
   return {
     type: AUTH_USER,
+    payload: request,
+  };
+};
+
+export const logoutUser = () => {
+  const request = axios(`${USER_SERVER}/logout`).then(
+    response => response.data
+  );
+
+  return {
+    type: LOGOUT_USER,
     payload: request,
   };
 };

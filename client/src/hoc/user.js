@@ -18,7 +18,11 @@ const links = [
 
 const UserLayout = props => {
   const generateLinks = links => {
-    return links.map(link => <Link to={link.linkTo}>{link.name}</Link>);
+    return links.map(link => (
+      <Link key={link.linkTo} to={link.linkTo}>
+        {link.name}
+      </Link>
+    ));
   };
 
   return (

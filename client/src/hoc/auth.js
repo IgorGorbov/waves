@@ -24,9 +24,10 @@ export default function(ComposedClass, reload, adminRoute = null) {
             this.props.history.push('/user/dashboard');
           }
         }
-        this.setState({
-          loadding: false,
-        });
+      });
+
+      this.setState({
+        loadding: false,
       });
     };
 
@@ -50,11 +51,9 @@ export default function(ComposedClass, reload, adminRoute = null) {
     };
   }
 
-  function mapDispatchToProps(state) {
-    return {
-      auth,
-    };
-  }
+  const mapDispatchToProps = {
+    auth,
+  };
 
   return connect(
     mapStateToProps,
