@@ -5,6 +5,7 @@ import {
   GET_PRODUCTS_BY_ARRIVAL,
   GET_BRANDS,
   GET_WOODS,
+  GET_PRODUCTS_TO_SHOPS,
 } from './types';
 import { PRODUCT_SERVER } from '../utils/misc';
 
@@ -48,6 +49,28 @@ export function getWoods() {
 
   return {
     type: GET_WOODS,
+    payload: request,
+  };
+}
+
+export function getProductsToShops(
+  skip,
+  limit,
+  filters = [],
+  previousState = []
+) {
+  const data = {
+    skip,
+    limit,
+    filters,
+  };
+  const request = axios.post(`${PRODUCT_SERVER}/shop`, data).then(resonse => ({
+    size: resonse.data.size,
+    articles: resonse.data.articles,
+  }));
+
+  return {
+    type: GET_PRODUCTS_TO_SHOPS,
     payload: request,
   };
 }
