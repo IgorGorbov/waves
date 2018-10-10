@@ -6,13 +6,15 @@ import {
   GET_BRANDS,
   GET_WOODS,
   GET_PRODUCTS_TO_SHOPS,
+  ADD_PRODUCT,
+  CLEAR_PRODUCT,
 } from './types';
 import { PRODUCT_SERVER } from '../utils/misc';
 
 export function getProductsBySell() {
   const request = axios
     .get(`${PRODUCT_SERVER}/articles?sortBy=sold&order=desc&limit=4`)
-    .then(resonse => resonse.data);
+    .then(response => response.data);
 
   return {
     type: GET_PRODUCTS_BY_SELL,
@@ -23,7 +25,7 @@ export function getProductsBySell() {
 export function getProductsByArrival() {
   const request = axios
     .get(`${PRODUCT_SERVER}/articles?sortBy=createdAt&order=desc&limit=4`)
-    .then(resonse => resonse.data);
+    .then(response => response.data);
 
   return {
     type: GET_PRODUCTS_BY_ARRIVAL,
@@ -34,7 +36,7 @@ export function getProductsByArrival() {
 export function getBrands() {
   const request = axios
     .get(`${PRODUCT_SERVER}/brands`)
-    .then(resonse => resonse.data);
+    .then(response => response.data);
 
   return {
     type: GET_BRANDS,
@@ -45,7 +47,7 @@ export function getBrands() {
 export function getWoods() {
   const request = axios
     .get(`${PRODUCT_SERVER}/woods`)
-    .then(resonse => resonse.data);
+    .then(response => response.data);
 
   return {
     type: GET_WOODS,
@@ -64,13 +66,34 @@ export function getProductsToShops(
     limit,
     filters,
   };
-  const request = axios.post(`${PRODUCT_SERVER}/shop`, data).then(resonse => ({
-    size: resonse.data.size,
-    articles: resonse.data.articles,
-  }));
+  const request = axios.post(`${PRODUCT_SERVER}/shop`, data).then(response => {
+    let newState = [...previousState, ...response.data.articles];
+    return {
+      size: response.data.size,
+      articles: newState,
+    };
+  });
 
   return {
     type: GET_PRODUCTS_TO_SHOPS,
     payload: request,
+  };
+}
+
+export function addProduct(dataToSubmit) {
+  const request = axios
+    .post(`${PRODUCT_SERVER}/articles`, dataToSubmit)
+    .then(response => response.data);
+
+  return {
+    type: ADD_PRODUCT,
+    payload: request,
+  };
+}
+
+export function clearProduct() {
+  return {
+    type: CLEAR_PRODUCT,
+    payload: '',
   };
 }

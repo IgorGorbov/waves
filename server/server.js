@@ -47,6 +47,8 @@ app.post('/api/product/shop', (req, res) => {
     }
   }
 
+  findArgs['publish'] = true;
+
   Product.find(findArgs)
     .populate('brand')
     .populate('wood')
@@ -65,13 +67,13 @@ app.post('/api/product/shop', (req, res) => {
   res.status(200);
 });
 
-app.post('/api/product/article', auth, admin, (req, res) => {
+app.post('/api/product/articles', auth, admin, (req, res) => {
   const product = new Product(req.body);
   product.save((err, doc) => {
     if (err) return res.json({ success: false, err });
     res.status(200).json({
       success: true,
-      product: doc,
+      article: doc,
     });
   });
 });
