@@ -8,6 +8,8 @@ import {
 } from '../../actions/products';
 import UserLayout from '../../hoc/user';
 import FormField from '../ui/formField';
+import FileUpload from '../ui/fileUpload';
+
 import {
   update,
   generateData,
@@ -212,6 +214,16 @@ class AddProduct extends Component {
         validationMessage: '',
         showLabel: true,
       },
+      images: {
+        value: [],
+        validation: {
+          required: false,
+        },
+        valid: true,
+        touched: false,
+        validationMessage: '',
+        showLabel: false,
+      },
     },
   };
 
@@ -296,12 +308,29 @@ class AddProduct extends Component {
     });
   };
 
+  imagesHandler = images => {
+    const newFormData = {
+      ...this.state.formdata,
+    };
+    newFormData['images'].value = images;
+    newFormData['images'].valid = images;
+
+    this.setState({
+      formdata: newFormData,
+    });
+  };
+
   render() {
     const { formdata, formError, formSuccess } = this.state;
 
     return (
       <UserLayout>
         <h1>Add Product</h1>
+
+        <FileUpload
+          imagesHandler={images => this.imagesHandler(images)}
+          reset={formSuccess}
+        />
 
         <form onSubmit={event => this.submitForm()}>
           <FormField

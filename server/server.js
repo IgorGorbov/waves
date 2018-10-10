@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyPorser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const formidable = require('express-formidable');
+const cloudinary = require('cloudinary');
 
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -13,6 +15,14 @@ const app = express();
 app.use(bodyPorser.urlencoded({ extended: true }));
 app.use(bodyPorser.json());
 app.use(cookieParser());
+
+// Cloudinary
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 // Middlewares
 const { auth } = require('./middleware/auth');
@@ -211,6 +221,32 @@ app.post('/api/users/login', (req, res) => {
           });
       });
     });
+  });
+});
+
+app.post('/api/users/upload-image', auth, admin, formidable(), (req, res) => {
+  cloudinary.uploader.upload(
+    req.files.file.path,
+    result => {
+      console.log(result);
+      res.status(200).send({
+        public_id: result.public_id,
+        url: result.url,
+      });
+    },
+    {
+      public_id: `${Date.now()}`,
+      resource_type: 'auto',
+    }
+  );
+});
+
+app.get('/api/users/remove-image', auth, admin, (req, res) => {
+  let image_id = req.query.public_id;
+
+  cloudinary.uploader.destroy(image_id, (error, result) => {
+    if (error) return res.json({ succes: false, error });
+    res.status(200).send('ok');
   });
 });
 

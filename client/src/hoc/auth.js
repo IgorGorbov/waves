@@ -15,12 +15,12 @@ export default function(ComposedClass, reload, adminRoute = null) {
 
         if (!user.isAuth) {
           if (reload) {
-            this.props.history.push('/login');
+            this.props.history.push('/register');
           }
         } else {
           if (adminRoute && !user.isAdmin) {
             this.props.history.push('/user/dashboard');
-          } else if (!reload) {
+          } else if (reload === false) {
             this.props.history.push('/user/dashboard');
           }
         }
