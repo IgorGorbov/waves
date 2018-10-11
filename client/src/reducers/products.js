@@ -8,6 +8,8 @@ import {
   CLEAR_PRODUCT,
   ADD_BRAND,
   ADD_WOOD,
+  GET_PRODUCT_DETAIL,
+  GET_PRODUCT_CLEAR,
 } from '../actions/types';
 
 export default function(state = {}, action) {
@@ -47,6 +49,16 @@ export default function(state = {}, action) {
         ...state,
         addWood: action.payload.success,
         woods: action.payload.woods,
+      };
+    case GET_PRODUCT_DETAIL:
+      return {
+        ...state,
+        prodDetail: action.payload,
+      };
+    case GET_PRODUCT_CLEAR:
+      return {
+        ...state,
+        prodDetail: action.payload,
       };
     default:
       return state;

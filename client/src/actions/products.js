@@ -10,6 +10,8 @@ import {
   CLEAR_PRODUCT,
   ADD_BRAND,
   ADD_WOOD,
+  GET_PRODUCT_DETAIL,
+  GET_PRODUCT_CLEAR,
 } from './types';
 import { PRODUCT_SERVER } from '../utils/misc';
 
@@ -131,5 +133,23 @@ export function addWood(dataToSubmit, existingWoods) {
   return {
     type: ADD_WOOD,
     payload: request,
+  };
+}
+
+export function getProductDetail(id) {
+  const request = axios
+    .get(`${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`)
+    .then(response => response.data[0]);
+
+  return {
+    type: GET_PRODUCT_DETAIL,
+    payload: request,
+  };
+}
+
+export function getProductClear() {
+  return {
+    type: GET_PRODUCT_CLEAR,
+    payload: '',
   };
 }
