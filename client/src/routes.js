@@ -10,6 +10,8 @@ import Register from './components/LoginRegister/register';
 import Login from './components/LoginRegister';
 import ManageCategories from './components/User/manageCategories';
 import UserDashboard from './components/User';
+import Cart from './components/User/cart';
+
 import Shop from './components/Shop';
 import ProductPage from './components/Product';
 
@@ -19,7 +21,13 @@ const Routes = () => {
       <Layout>
         <Route path="/product/:id" exact component={Auth(ProductPage, null)} />
 
-        <Route path="/" exact component={Auth(Home, null)} />
+        <Route path="/user/cart" exact component={Auth(Cart, true)} />
+        <Route
+          path="/user/dashboard"
+          exact
+          component={Auth(UserDashboard, true)}
+        />
+
         <Route
           path="/admin/add-product"
           exact
@@ -34,12 +42,7 @@ const Routes = () => {
         <Route path="/login" exact component={Auth(Login, false)} />
         <Route path="/shop" exact component={Auth(Shop, null)} />
         <Route path="/register" exact component={Auth(Register, false)} />
-
-        <Route
-          path="/user/dashboard"
-          exact
-          component={Auth(UserDashboard, true)}
-        />
+        <Route path="/" exact component={Auth(Home, null)} />
       </Layout>
     </Switch>
   );

@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema({
     required: true,
     maxlength: 50,
   },
-  card: {
+  cart: {
     type: Array,
     default: [],
   },

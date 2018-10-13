@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addToCart } from '../../actions/user.js';
 import { Button } from './button';
 
 const NOT_IMAGE = '/images/image_not_availble.png';
 
-export default class Card extends Component {
+class Card extends Component {
   renderCardImage = images => {
     if (images.length) {
       return images[0].url;
@@ -12,7 +14,16 @@ export default class Card extends Component {
     return NOT_IMAGE;
   };
   render() {
-    const { grid, images, brand, name, price, _id, description } = this.props;
+    const {
+      grid,
+      images,
+      brand,
+      name,
+      price,
+      _id,
+      description,
+      user,
+    } = this.props;
     return (
       <div className={`card_item_wrapper ${grid}`}>
         <div
@@ -47,7 +58,9 @@ export default class Card extends Component {
               <Button
                 type="bag_link"
                 runAction={() => {
-                  console.log('added to card');
+                  user.userData
+                    ? this.props.addToCart(_id)
+                    : console.log('need log in');
                 }}
               />
             </div>
@@ -57,3 +70,18 @@ export default class Card extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = {
+  addToCart,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Card);

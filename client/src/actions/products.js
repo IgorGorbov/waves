@@ -138,7 +138,7 @@ export function addWood(dataToSubmit, existingWoods) {
 
 export function getProductDetail(id) {
   const request = axios
-    .get(`${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`)
+    .get(`${PRODUCT_SERVER}/articles-by-id?id=${id}&type=single`)
     .then(response => response.data[0]);
 
   return {

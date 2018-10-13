@@ -20,8 +20,8 @@ class Header extends Component {
     ],
     user: [
       {
-        name: 'My Card',
-        linkTo: '/user/card',
+        name: 'My Cart',
+        linkTo: '/user/cart',
         public: false,
       },
       {
@@ -70,7 +70,7 @@ class Header extends Component {
 
     return (
       <div className="cart_link" key={link.name}>
-        <span>{user.card ? user.card.length : 0}</span>
+        <span>{user.cart ? user.cart.length : 0}</span>
         <Link to={link.linkTo}>{link.name}</Link>
       </div>
     );
@@ -93,7 +93,7 @@ class Header extends Component {
       });
     }
     return list.map(link => {
-      if (link.name !== 'My Card') {
+      if (link.name !== 'My Cart') {
         return this.defaultLink(link);
       } else {
         return this.cardLink(link);

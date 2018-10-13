@@ -6,7 +6,7 @@ import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 
 import { Button } from '../ui/button';
 
-const ProdInfo = ({ detail }) => {
+const ProdInfo = ({ detail, addToCart }) => {
   const showProdTags = detail => (
     <div className="product_tags">
       {detail.shipping ? (
@@ -43,10 +43,7 @@ const ProdInfo = ({ detail }) => {
     <div className="product_actions">
       <div className="price">$ {detail.price}</div>
       <div className="cart">
-        <Button
-          type="addToCartLink"
-          runAction={() => console.log('add to cart')}
-        />
+        <Button type="addToCartLink" runAction={() => addToCart(detail._id)} />
       </div>
     </div>
   );

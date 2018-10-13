@@ -13,3 +13,6 @@ export const ADD_BRAND = 'ADD_BRAND';
 export const ADD_WOOD = 'ADD_WOOD';
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCT_CLEAR = 'GET_PRODUCT_CLEAR';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const GET_CART_ITEMS = 'GET_CART_ITEMS';
+export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
