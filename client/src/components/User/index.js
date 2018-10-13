@@ -1,6 +1,7 @@
 import React from 'react';
 import UserLayout from '../../hoc/user';
 import { Button } from '../../components/ui/button';
+import HistoryBlock from './historyBlock';
 
 const UserDashboard = ({ user }) => {
   const name = user.userData ? user.userData.name : 'name';
@@ -25,8 +26,11 @@ const UserDashboard = ({ user }) => {
 
       <div className="user_nfo_panel">
         <h2>History purchases</h2>
-
-        <div className="user_product_block_wrapper">history</div>
+        {user.userData.history ? (
+          <div className="user_product_block_wrapper">
+            <HistoryBlock products={user.userData.history} />
+          </div>
+        ) : null}
       </div>
     </UserLayout>
   );

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import FontAwersomeIcon from '@fortawesome/react-fontawesome';
 import faFrown from '@fortawesome/fontawesome-free-solid/faFrown';
 import faSmile from '@fortawesome/fontawesome-free-solid/faSmile';
 
-import { getCartItems, removeCartItem } from '../../actions/user';
+import { getCartItems, removeCartItem, onSuccessBuy } from '../../actions/user';
 
 import UserLayout from '../../hoc/user';
 import ProductBlock from '../ui/productBlock';
@@ -73,15 +72,34 @@ class Cart extends Component {
       <div className="cart_success">
         <FontAwersomeIcon icon={faSmile} />
         <div>Thank you !</div>
+        <p>Your order is now complete</p>
       </div>
     );
   };
 
-  transactionError = () => {};
+  transactionError = data => {
+    console.log('PayPal error');
+  };
 
-  transactionCansel = () => {};
+  transactionCansel = data => {
+    console.log('Transaction canseled');
+  };
 
-  transactionSuccess = () => {};
+  transactionSuccess = data => {
+    this.props
+      .onSuccessBuy({
+        cartDetail: this.props.user.cartDetail,
+        paymentData: data,
+      })
+      .then(() => {
+        if (this.props.user.successBuy) {
+          this.setState({
+            showTotal: false,
+            showSuccess: true,
+          });
+        }
+      });
+  };
 
   render() {
     const { user } = this.props;
@@ -94,7 +112,9 @@ class Cart extends Component {
             type="cart"
             removeItem={id => this.removeFromCart(id)}
           />
-          {!this.state.showTotal ? this.showNotItemsMessage() : null}
+          {!this.state.showTotal && !this.state.showSuccess
+            ? this.showNotItemsMessage()
+            : null}
 
           {this.state.showSuccess ? this.showSuccessMessage() : null}
 
@@ -117,6 +137,7 @@ class Cart extends Component {
 const mapDispatchToProps = {
   getCartItems,
   removeCartItem,
+  onSuccessBuy,
 };
 
 export default connect(

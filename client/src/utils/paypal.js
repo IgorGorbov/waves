@@ -4,25 +4,18 @@ import PaypalExpressBtn from 'react-paypal-express-checkout';
 class Paypal extends Component {
   render() {
     const onSuccess = payment => {
-      //console.log(JSON.stringify(payment));
+      //   console.log(JSON.stringify(payment));
       this.props.onSuccess(payment);
 
       // {
-      //     "paid": true,
-      //     "cancelled": false,
-      //     "payerID": "3GFGQ6GNJ4PWA",
-      //     "paymentID": "PAY-0UB74233TB278434KLMYYMVY",
-      //     "paymentToken": "EC-2J270753AK460261B",
-      //     "returnUrl": "https://www.sandbox.paypal.com/?paymentId=PAY-0UB74233TB278434KLMYYMVY&token=EC-2J270753AK460261B&PayerID=3GFGQ6GNJ4PWA",
-      //     "address": {
-      //         "recipient_name": "test buyer",
-      //         "line1": "1 Main St",
-      //         "city": "San Jose",
-      //         "state": "CA",
-      //         "postal_code": "95131",
-      //         "country_code": "US"
-      //     },
-      //     "email": "fernando.lobo.prez-buyer@gmail.com"
+      //   "paid":true,
+      //   "cancelled":false,
+      //   "payerID":"7SWLY99WXQZMY",
+      //   "paymentID":"PAY-9VJ983235R618971VLPBDTZI",
+      //   "paymentToken":"EC-1RG15444JC880884P",
+      //   "returnUrl":"https://www.sandbox.paypal.com/?paymentId=PAY-9VJ983235R618971VLPBDTZI&token=EC-1RG15444JC880884P&PayerID=7SWLY99WXQZMY",
+      //   "address":{"recipient_name":"Игорь Горбов","line1":"1 Main St","city":"San Jose","state":"CA","postal_code":"95131","country_code":"US"},
+      //   "email":"gorbov18@gmail.com"
       // }
     };
 

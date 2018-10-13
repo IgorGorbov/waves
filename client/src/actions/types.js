@@ -16,3 +16,4 @@ export const GET_PRODUCT_CLEAR = 'GET_PRODUCT_CLEAR';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const GET_CART_ITEMS = 'GET_CART_ITEMS';
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
+export const ON_SUCCESS_BUY = 'ON_SUCCESS_BUY';
