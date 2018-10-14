@@ -9,13 +9,15 @@ const async = require('async');
 require('dotenv').config();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASE);
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 
 app.use(bodyPorser.urlencoded({ extended: true }));
 app.use(bodyPorser.json());
 app.use(cookieParser());
+
+app.use(express.static('client/build'));
 
 // Cloudinary
 
@@ -28,6 +30,10 @@ cloudinary.config({
 // Middlewares
 const { auth } = require('./middleware/auth');
 const { admin } = require('./middleware/admin');
+
+// utils
+
+const { sendEmail } = require('./utils/mail/index');
 
 // Model
 const { User } = require('./models/user');
@@ -192,7 +198,9 @@ app.post('/api/users/register', (req, res) => {
   user.save((err, doc) => {
     if (err) return res.json({ success: false, err });
 
-    res.status(200).json({
+    sendEmail(doc.email, doc.name, null, 'welcome');
+
+    return res.status(200).json({
       success: true,
     });
   });
@@ -427,6 +435,14 @@ app.post('/api/site/site-info', auth, admin, (req, res) => {
     }
   );
 });
+
+// default
+if (process.env.NODE_ENV === 'production') {
+  const path = require('path');
+  app.get('/*', (req, res) => {
+    res.sendfile(path.resolve(__dirname, '../client', 'build', 'index.html'));
+  });
+}
 
 const port = process.env.PORT || 3002;
 
