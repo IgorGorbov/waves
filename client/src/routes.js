@@ -17,6 +17,8 @@ import ManageSite from './components/User/manageSite';
 import Shop from './components/Shop';
 import ProductPage from './components/Product';
 
+import Page404 from './utils/page404';
+
 const Routes = () => {
   return (
     <Switch>
@@ -51,6 +53,7 @@ const Routes = () => {
         <Route path="/shop" exact component={Auth(Shop, null)} />
         <Route path="/register" exact component={Auth(Register, false)} />
         <Route path="/" exact component={Auth(Home, null)} />
+        <Route component={Auth(Page404, null)} />
       </Layout>
     </Switch>
   );
