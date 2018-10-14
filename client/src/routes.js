@@ -11,6 +11,7 @@ import Login from './components/LoginRegister';
 import ManageCategories from './components/User/manageCategories';
 import UserDashboard from './components/User';
 import Cart from './components/User/cart';
+import UserProfile from './components/User/updateProfile';
 
 import Shop from './components/Shop';
 import ProductPage from './components/Product';
@@ -27,6 +28,7 @@ const Routes = () => {
           exact
           component={Auth(UserDashboard, true)}
         />
+        <Route path="/user/profile" exact component={Auth(UserProfile, true)} />
 
         <Route
           path="/admin/add-product"
