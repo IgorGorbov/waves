@@ -35,6 +35,7 @@ const { Brand } = require('./models/brand');
 const { Wood } = require('./models/wood');
 const { Product } = require('./models/product');
 const { Payment } = require('./models/payment');
+const { Site } = require('./models/site');
 
 // Routes
 
@@ -404,6 +405,25 @@ app.post('/api/users/update-profile', auth, (req, res) => {
       res.status(200).send({
         success: true,
       });
+    }
+  );
+});
+
+app.get('/api/site/site-info', (req, res) => {
+  Site.find({}, (err, site) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).send(site[0].siteInfo);
+  });
+});
+
+app.post('/api/site/site-info', auth, admin, (req, res) => {
+  Site.findOneAndUpdate(
+    { name: 'Site' },
+    { $set: { siteInfo: req.body } },
+    { new: true },
+    (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      res.status(200).json({ success: false, siteInfo: doc.siteInfo });
     }
   );
 });
