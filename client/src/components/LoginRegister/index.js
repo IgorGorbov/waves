@@ -19,7 +19,7 @@ const UserForm = () => {
             <Button
               type="default"
               title="Create an Account"
-              linkTo="/register"
+              linkTo="/user/register"
               addStyles={{
                 margin: '10px 0 0 0',
               }}

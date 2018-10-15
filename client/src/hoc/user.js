@@ -30,6 +30,10 @@ const admin = [
     name: 'Manage categories',
     linkTo: '/admin/manage-categories',
   },
+  {
+    name: 'Upload file',
+    linkTo: '/admin/manage-files',
+  },
 ];
 
 const UserLayout = props => {

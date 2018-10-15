@@ -51,6 +51,8 @@ class Shop extends Component {
   };
 
   showFilteredResults = filters => {
+    console.log(filters);
+
     this.props.getProductsToShops(0, this.state.limit, filters).then(() => {
       this.setState({
         skip: 0,
@@ -119,7 +121,7 @@ class Shop extends Component {
                 initState={true}
                 title="Woods"
                 list={products.woods}
-                handleFilters={filters => this.handleFilters(filters, 'woods')}
+                handleFilters={filters => this.handleFilters(filters, 'wood')}
               />
 
               <CollapseRadio

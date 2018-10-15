@@ -108,7 +108,7 @@ class Register extends Component {
                 formSuccess: true,
               },
               () => {
-                this.props.history.push('/login');
+                this.props.history.push('/user/login');
               }
             );
           } else {

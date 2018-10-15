@@ -1,10 +1,9 @@
 const purchase = data => {
+  const getItems = () => {
+    let template;
 
-    const getItems = () =>{
-        let template;
-
-        data.product.forEach(item=>{
-            template += `
+    data.product.forEach(item => {
+      template += `
             <div style="font-family: Helvetica, Arial, sans-serif; letter-spacing: 0.5px; line-height: 1.4; margin: 0; padding: 15px 25px ; text-transform: uppercase;">
                 <h3>
                     ${item.brand} ${item.name}
@@ -13,11 +12,10 @@ const purchase = data => {
                 <p>Purchase order: ${item.porder}</p>
              </div>
             `;
-        })
+    });
 
-        return template;
-    }
-
+    return template;
+  };
 
   return `
     <!DOCTYPE html>

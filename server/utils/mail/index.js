@@ -1,8 +1,9 @@
 const mailer = require('nodemailer');
 const { welcome } = require('./welcome_template');
+const { purchase } = require('./purchase_template');
 require('dotenv').config();
 
-const getEmailData = (to, name, token, type) => {
+const getEmailData = (to, name, token, type, actionData = null) => {
   let data = null;
 
   switch (type) {
@@ -14,7 +15,14 @@ const getEmailData = (to, name, token, type) => {
         html: welcome(),
       };
       break;
-
+    case 'purchase':
+      data = {
+        from: 'Waves <gorbov18@gmail.com>',
+        to,
+        subject: `Tkanks for shopping with us ${name}.`,
+        html: purchase(actionData),
+      };
+      break;
     default:
       break;
   }

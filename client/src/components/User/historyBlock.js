@@ -6,6 +6,7 @@ const HistoryBlock = ({ products }) => {
     products
       ? products.map(product => (
           <tr key={product.dateOfPurchase}>
+            <td>{product.porder}</td>
             <td>{moment(product.dateOfPurchase).format('MM-DD-YY')}</td>
             <td>
               {product.brand.name} {product.name}
@@ -20,6 +21,7 @@ const HistoryBlock = ({ products }) => {
       <table>
         <thead>
           <tr>
+            <th>Order number</th>
             <th>Date of purchase</th>
             <th>Product</th>
             <th>Price paid</th>

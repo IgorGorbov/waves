@@ -1,8 +1,12 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const bodyPorser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
+const multer = require('multer');
+const sha1 = require('crypto-js/sha1');
 
 const mongoose = require('mongoose');
 const async = require('async');
@@ -239,7 +243,6 @@ app.post('/api/users/upload-image', auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(
     req.files.file.path,
     result => {
-      console.log(result);
       res.status(200).send({
         public_id: result.public_id,
         url: result.url,
@@ -336,8 +339,16 @@ app.post('/api/users/success-buy', auth, (req, res) => {
   let history = [];
   let transactionData = {};
 
+  const date = new Date();
+  const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${sha1(
+    req.user._id
+  )
+    .toString()
+    .substring(0, 8)}`;
+
   req.body.cartDetail.forEach(item => {
     history.push({
+      porder: po,
       dateOfPurchase: Date.now(),
       name: item.name,
       brand: item.brand.name,
@@ -354,7 +365,7 @@ app.post('/api/users/success-buy', auth, (req, res) => {
     lastname: req.user.lastname,
     email: req.user.email,
   };
-  transactionData.data = req.body.paymentData;
+  transactionData.data = { ...req.body.paymentData, porder: po };
   transactionData.product = history;
 
   User.findOneAndUpdate(
@@ -388,6 +399,8 @@ app.post('/api/users/success-buy', auth, (req, res) => {
           },
           err => {
             if (err) return res.json({ success: false, err });
+
+            sendEmail(user.email, user.name, null, 'purchase', transactionData);
             res.status(200).json({
               success: true,
               cart: user.cart,
@@ -434,6 +447,37 @@ app.post('/api/site/site-info', auth, admin, (req, res) => {
       res.status(200).json({ success: false, siteInfo: doc.siteInfo });
     }
   );
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage }).single('file');
+
+app.post('/api/users/uploadfile', auth, admin, (req, res) => {
+  upload(req, res, err => {
+    if (err) return res.json({ success: false, err });
+
+    return res.json({ success: false });
+  });
+});
+
+app.get('/api/users/files', auth, admin, (req, res) => {
+  const dir = path.resolve('.') + '/uploads/';
+  fs.readdir(dir, (err, items) => {
+    return res.status(200).send(items);
+  });
+});
+
+app.get('/api/users/download/:id', auth, admin, (req, res) => {
+  const file = path.resolve('.') + `/uploads/${req.params.id}`;
+  res.download(file);
 });
 
 // default

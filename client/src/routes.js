@@ -13,6 +13,7 @@ import UserDashboard from './components/User';
 import Cart from './components/User/cart';
 import UserProfile from './components/User/updateProfile';
 import ManageSite from './components/User/manageSite';
+import AddFile from './components/User/addFile';
 
 import Shop from './components/Shop';
 import ProductPage from './components/Product';
@@ -21,8 +22,8 @@ import Page404 from './utils/page404';
 
 const Routes = () => {
   return (
-    <Switch>
-      <Layout>
+    <Layout>
+      <Switch>
         <Route path="/product/:id" exact component={Auth(ProductPage, null)} />
 
         <Route path="/user/cart" exact component={Auth(Cart, true)} />
@@ -48,14 +49,20 @@ const Routes = () => {
           exact
           component={Auth(ManageCategories, true)}
         />
+        <Route
+          path="/admin/manage-files"
+          exact
+          component={Auth(AddFile, true)}
+        />
 
-        <Route path="/login" exact component={Auth(Login, false)} />
+        <Route path="/user/login" exact component={Auth(Login, false)} />
         <Route path="/shop" exact component={Auth(Shop, null)} />
-        <Route path="/register" exact component={Auth(Register, false)} />
+        <Route path="/user/register" exact component={Auth(Register, false)} />
         <Route path="/" exact component={Auth(Home, null)} />
-        <Route component={Auth(Page404, null)} />
-      </Layout>
-    </Switch>
+
+        <Route component={Auth(Page404)} />
+      </Switch>
+    </Layout>
   );
 };
 
