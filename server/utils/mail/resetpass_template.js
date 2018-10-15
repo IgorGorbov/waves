@@ -1,9 +1,10 @@
 require('dotenv').config();
 
 const resetPass = data => {
-
-    const URL = process.env.NODE_ENV === 'production' ? process.env.ROOT_URL: 'http://localhost:3000';
-
+  const URL =
+    process.env.NODE_ENV === 'production'
+      ? process.env.ROOT_URL
+      : 'http://localhost:3000';
 
   return `
     <!DOCTYPE html>
@@ -22,7 +23,9 @@ const resetPass = data => {
                    <tr>
                        <td style="margin: 0 auto;padding: 15px 25px;box-sizing: border-box">
                             <p>Click on this link to reset your password:</p>
-                            <a href="${URL}/reset_password/${data.resetToken}">Reset your password</a>
+                            <a href="${URL}/user/reset-password/${
+    data.resetToken
+  }">Reset your password</a>
                        </td>
                    </tr>
                    <tr>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import FormField from '../ui/formField';
+import { Button } from '../ui/button';
 import { update, generateData, isFormValid } from '../ui/formActions';
 import { loginUser } from '../../actions/user';
 
@@ -93,7 +94,20 @@ class Login extends Component {
           {formError ? (
             <div className="error_label">Please check your data</div>
           ) : null}
-          <button onClick={event => this.submitForm(event)}>Log in</button>
+          <button
+            style={{ padding: '10px 20px' }}
+            onClick={event => this.submitForm(event)}
+          >
+            Log in
+          </button>
+
+          <Link
+            className="button"
+            style={{ padding: '11px 20px', marginLeft: '10px' }}
+            to="/user/reset-user"
+          >
+            Forgot password
+          </Link>
         </form>
       </div>
     );

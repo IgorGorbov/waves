@@ -7,6 +7,7 @@ const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 const multer = require('multer');
 const sha1 = require('crypto-js/sha1');
+const moment = require('moment');
 
 const mongoose = require('mongoose');
 const async = require('async');
@@ -237,6 +238,49 @@ app.post('/api/users/login', (req, res) => {
       });
     });
   });
+});
+
+app.post('/api/users/reset-user', (req, res) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
+    user.generateResetToken((err, user2) => {
+      if (err) return res.json({ success: false, err });
+      sendEmail(user.email, user.name, null, 'resetPassword', user);
+      return res.json({ success: true });
+    });
+  });
+});
+
+app.post('/api/users/reset-password', (req, res) => {
+  const today = moment()
+    .startOf('day')
+    .valueOf();
+
+  User.findOne(
+    {
+      resetToken: req.body.resetToken,
+      resetTokenExp: {
+        $gte: today,
+      },
+    },
+    (err, user) => {
+      if (!user)
+        return res.json({
+          success: false,
+          message: 'Sorry, token bad, generate a new one.',
+        });
+
+      user.password = req.body.password;
+      user.resetToken = '';
+      user.resetTokenExp = '';
+
+      user.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+        return res.status(200).json({
+          success: true,
+        });
+      });
+    }
+  );
 });
 
 app.post('/api/users/upload-image', auth, admin, formidable(), (req, res) => {

@@ -117,6 +117,25 @@ button {
     margin-top: 10px;
     font-family: 'Oswald', sans-serif;
     font-size: 16px;
+    transition: background 200ms ease;
+}
+
+.button {
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 10px;
+    background: #e1ddc3;
+    margin-top: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    transition: background 200ms ease;
+}
+
+button:hover,
+.link_default:hover,
+.button:hover {
+    background: #ebe5bf;
+
 }
 
 .error_label {
@@ -194,7 +213,10 @@ select {
     display: table;
     background: #e1ddc3;
     margin-top: 10px;
+    transition: background 200ms ease;
 }
+
+
 
 .card_link,
 .bag_link,

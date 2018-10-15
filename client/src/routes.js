@@ -18,6 +18,8 @@ import AddFile from './components/User/addFile';
 import Shop from './components/Shop';
 import ProductPage from './components/Product';
 
+import ResetPass from './components/ResetUser/resetPass';
+import ResetUser from './components/ResetUser';
 import Page404 from './utils/page404';
 
 const Routes = () => {
@@ -58,8 +60,17 @@ const Routes = () => {
         <Route path="/user/login" exact component={Auth(Login, false)} />
         <Route path="/shop" exact component={Auth(Shop, null)} />
         <Route path="/user/register" exact component={Auth(Register, false)} />
+        <Route
+          path="/user/reset-user"
+          exact
+          component={Auth(ResetUser, false)}
+        />
+        <Route
+          path="/user/reset-password/:token"
+          exact
+          component={Auth(ResetPass, false)}
+        />
         <Route path="/" exact component={Auth(Home, null)} />
-
         <Route component={Auth(Page404)} />
       </Switch>
     </Layout>

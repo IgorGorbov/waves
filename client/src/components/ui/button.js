@@ -21,7 +21,7 @@ export const Button = ({
           <Link
             className={altClass ? altClass : 'link_default'}
             to={linkTo}
-            {...addStyles}
+            style={addStyles}
           >
             {title}
           </Link>

@@ -1,9 +1,11 @@
 const mailer = require('nodemailer');
 const { welcome } = require('./welcome_template');
 const { purchase } = require('./purchase_template');
+const { resetPass } = require('./resetpass_template');
+
 require('dotenv').config();
 
-const getEmailData = (to, name, token, type, actionData = null) => {
+const getEmailData = (to, name, token, type, actionData) => {
   let data = null;
 
   switch (type) {
@@ -23,6 +25,14 @@ const getEmailData = (to, name, token, type, actionData = null) => {
         html: purchase(actionData),
       };
       break;
+    case 'resetPassword':
+      data = {
+        from: 'Waves <waves.guitars.rev@gmail.com>',
+        to,
+        subject: `Hey ${name}, reset your pass`,
+        html: resetPass(actionData),
+      };
+      break;
     default:
       break;
   }
@@ -30,7 +40,7 @@ const getEmailData = (to, name, token, type, actionData = null) => {
   return data;
 };
 
-const sendEmail = (to, name, token, type) => {
+const sendEmail = (to, name, token, type, actionData) => {
   const smtpTransport = mailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -39,7 +49,7 @@ const sendEmail = (to, name, token, type) => {
     },
   });
 
-  const mail = getEmailData(to, name, token, type);
+  const mail = getEmailData(to, name, token, type, actionData);
 
   smtpTransport.sendMail(mail, (err, res) => {
     if (err) console.log(err);
