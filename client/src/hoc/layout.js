@@ -7,7 +7,7 @@ import Footer from '../components/Footer/';
 
 class Layout extends Component {
   componentDidMount = () => {
-    if (!Object.keys(this.props.site)) {
+    if (!!Object.keys(this.props.site)) {
       this.props.getSiteData();
     }
   };

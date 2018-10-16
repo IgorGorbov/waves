@@ -570,6 +570,7 @@ footer .business_nfo .nfo {
     clear: both;
     padding: 0px 25px;
     border-top: 1px solid #eeeeee;
+    margin-bottom: -15px;
 }
 
 .card_item_wrapper.grid_bars .tags {

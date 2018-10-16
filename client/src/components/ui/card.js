@@ -51,7 +51,6 @@ class Card extends Component {
                 altClass="card_link"
                 title="View propduct"
                 linkTo={`/product/${_id}`}
-                addStyles={{ margin: '10px 0 0 0' }}
               />
             </div>
             <div className="button_wrapp">

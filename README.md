@@ -19,4 +19,8 @@
 - react-slick
 - redux-promise
 
+#### Admin:
+- email: admin@gmail.com
+- password: admin
+
 **Demo:** [https://react-waves.herokuapp.com/](https://react-waves.herokuapp.com/)
