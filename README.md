@@ -16,7 +16,6 @@
 - react-dropzone
 - react-moment
 - react-slick
-- react-slick
 - redux-promise
 
 #### Admin:
